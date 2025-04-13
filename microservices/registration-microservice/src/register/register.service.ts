@@ -33,4 +33,15 @@ export class RegisterService {
 
         return user;
     }
+
+    async findAll() {
+        return await this.prisma.user.findMany({
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                createdAt: true
+            }
+        });
+    }
 }

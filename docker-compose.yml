@@ -10,11 +10,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - mongodb_data:/data/db
-      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
-      - type: bind
-        source: ./mongodb-config/mongodb-keyfile
-        target: /data/db/mongodb-keyfile
-        read_only: true
+      - ./mongodb-config/mongodb-keyfile:/data/db/mongodb-keyfile:ro
     user: "999:999"
 
 volumes:

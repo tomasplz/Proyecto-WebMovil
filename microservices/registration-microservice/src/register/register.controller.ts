@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { RegisterService } from './register.service';
 import { RegisterUserDto } from './dto/register-user.dto';
 
@@ -28,4 +28,23 @@ export class RegisterController {
             );
         }
     }
-} 
+
+    @Get()
+    async getUsers() {
+        try {
+            const users = await this.registerService.findAll();
+            return {
+                message: 'Usuarios encontrados',
+                users: users
+            };
+        } catch (error) {
+            throw new HttpException(
+                {
+                    status: HttpStatus.INTERNAL_SERVER_ERROR,
+                    error: error.message,
+                },
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+        }
+    }
+}
